@@ -1,0 +1,95 @@
+extends javascript, html
+
+snippet import "polymer import"
+<link rel="import" href="$0">
+endsnippet
+
+snippet jsimport "javascript import"
+<script src="$1"></script>$0
+endsnippet
+
+snippet cssimport "css stylesheet import"
+<link rel="stylesheet" href="$0">
+endsnippet
+
+snippet indexhtml "index.html template"
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>$1</title>
+    </head>
+    <body>
+        $0
+    </body>
+</html>
+endsnippet
+
+snippet d3cdn "d3 cdn"
+https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js
+endsnippet
+
+snippet threecdn "three cdn"
+https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js
+endsnippet
+
+snippet underscorecdn "underscore cdn"
+https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js
+endsnippet
+
+snippet jquerycdn "jquery cdn"
+"//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"$0
+endsnippet
+
+snippet polymodule
+<dom-module id="$1">
+    <style>
+    :host {
+        display : block;
+    }
+    </style>
+    <template>
+        $0
+    </template>
+    <script>
+    (function(){
+        Polymer({
+            is: "$1",
+            properties: {
+                $2
+            }
+        });
+    })();
+    </script>
+</dom-module>
+endsnippet
+
+snippet templater
+<template is="dom-repeat" items="$1">$0</template>
+endsnippet
+
+snippet templatei
+<template is="dom-if" if="$1">$0</template>
+endsnippet
+
+snippet div
+<div $1>$0</div>
+endsnippet
+
+snippet centerlayout "using iron-flex-layout"
+<div class="horizontal layout center">
+    <div class="layout vertical center flex self-center">$1</div>
+</div>
+endsnippet
+
+snippet html "html template"
+<html>
+    <head>
+        <title>$1</title>
+        $2
+    </head>
+    <body>
+        $0
+    </body>
+</html>
+endsnippet

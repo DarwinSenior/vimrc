@@ -1,0 +1,20 @@
+snippet opencv_experiment
+#include <iostream>
+#include <string>
+#include <opencv2/opencv.hpp>
+
+
+cv::Mat3b read_image(const std::string& filename){
+    auto result = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
+    return result;
+}
+
+int main(){
+    std::string name;
+    std::cin>>name;
+    auto image = read_image(name);    
+    cv::namedWindow("display window", cv::WINDOW_AUTOSIZE);
+    cv::imshow("display window", image);
+    cv::waitKey(0);
+}
+endsnippet
