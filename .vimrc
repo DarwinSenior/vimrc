@@ -27,18 +27,24 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'gcmt/wildfire.vim'
+" Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'darwinsenior/rainbow'
 " the follwoing are
 " ========color scheme==============
-Plugin 'tomasr/molokai'
 Plugin 'marcopaganini/termschool-vim-theme'
+Plugin 'tomasr/molokai'
 Plugin 'hewo/vim-colorscheme-deepsea'
 Plugin 'Wutzara/vim-materialtheme'
 Plugin 'morhetz/gruvbox'
+Plugin 'd11wtq/tomorrow-theme-vim'
+Plugin 'reedes/vim-colors-pencil'
+Plugin 'chriskempson/base16-vim'
+Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'mhinz/vim-startify'
-Plugin 'reedes/vim-colors-pencil'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'itchyny/lightline.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'vim-airline/vim-airline'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'nathanaelkane/vim-indent-guides'
 " This pligin does not support the dot repeat
@@ -58,13 +64,12 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'wellle/targets.vim'
 Plugin 'Valloric/MatchTagAlways'
 Plugin 'rking/ag.vim'
-Plugin 'kien/rainbow_parentheses.vim'
 " The plugin listed below are language specific
 Plugin 'rbonvall/vim-textobj-latex'
 " This plugin is for writing
 Plugin 'junegunn/goyo.vim'
 Plugin 'reedes/vim-pencil'
-Plugin 'itchyny/calendar.vim'
+Plugin 'itchyny/calendar.vim' 
 " For all languages
 Plugin 'sheerun/vim-polyglot'
 Plugin 'Valloric/YouCompleteMe'
@@ -118,7 +123,7 @@ endfunction
 
 function! s:goyo_leave()
     set scrolloff=5
-    colorscheme deepsea
+    colorscheme Tomorrow-Night
     call pencil#init({'wrap': 'off'})
     set nospell
 endfunction
@@ -153,6 +158,7 @@ let g:ctrlp_show_hidden = 1
 let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
+let g:syntastic_html_tidy_exec = 'tidy5'
 set tags+=./.tags
 
 " Limit the working path to current path
@@ -172,62 +178,10 @@ function! Ulti_ExpandOrJump_and_getRes()
 endfunction
 inoremap <CR> <C-R>=(Ulti_ExpandOrJump_and_getRes() > 0)?"":"\n"<CR>
 
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
-      \ }
+let g:airline_theme = "bubblegum"
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
-function! MyModified()
-  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! MyReadonly()
-  return &ft !~? 'help' && &readonly ? '' : ''
-endfunction
-
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-
-function! MyFilename()
-  let fname = expand('%:t')
-  return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
-endfunction
-
-function! MyFugitive()
-  try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
-      let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
-    endif
-  catch
-  endtry
-  return ''
-endfunction
 
 " " Configuration of markdown
 " let g:vim_markdown_folding_disable=1
@@ -327,7 +281,7 @@ filetype plugin on
 filetype indent on
 
 "Set the theme and the fontsize
-colorscheme deepsea
+colorscheme Tomorrow-Night
 set guifont=InputSans:h20"
 
 " Set to auto read when a file is changed from the outside
@@ -368,25 +322,27 @@ tmap <ESC> <C-\><C-n>
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
+" startify settings
 
+let g:startify_bookmarks = [ {'v': '~/.vimrc'}, '~/.zshrc', '~/.tmux.conf' ]
 let g:startify_custom_header = [
-                \ '           ___',
-                \ '           | |',
-                \ '           | |',
-                \ '   -------------------',
-                \ '   -------------------',
-                \ '    |  ___  |  ___  |',
-                \ '    | | | | | | | | |',
-                \ '    | |-+-| | |-+-| |',
-                \ '    | |_|_| | |_|_| |',
-                \ '    |  ___  |  ___  |',
-                \ '    | |   | | |   | |',
-                \ '    | |   | | |   | |',
-                \ '    | |___| | |___| |',
-                \ '    |  ___  |  ___  |',
-                \ '    | |   | | |   | |',
-                \ '    | |   | | |   | |',
-                \ '    | |___| | |___| |',
-                \ '    |       |       |',
-                \ '   ==================='
+                \ '                                 ___         ',
+                \ '                                 | |         ',
+                \ '                                 | |         ',
+                \ '                         ------------------- ',
+                \ '                         ------------------- ',
+                \ '                          |  ___  |  ___  |  ' ,
+                \ '                          | | | | | | | | |  ' ,
+                \ '                          | |-+-| | |-+-| |  ' ,
+                \ '                          | |_|_| | |_|_| |  ' ,
+                \ '                          |  ___  |  ___  |  ' ,
+                \ '                          | |   | | |   | |  ' ,
+                \ '                          | |   | | |   | |  ' ,
+                \ '                          | |___| | |___| |  ' ,
+                \ '                          |  ___  |  ___  |  ' ,
+                \ '                          | |   | | |   | |  ' ,
+                \ '                          | |   | | |   | |  ' ,
+                \ '                          | |___| | |___| |  ' ,
+                \ '                          |       |       |  ' ,
+                \ '                         =================== '
 \]
