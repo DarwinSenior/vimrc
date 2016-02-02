@@ -43,18 +43,24 @@ Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'mhinz/vim-startify'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
+Plugin 'benekastah/neomake'
 Plugin 'vim-airline/vim-airline'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'nathanaelkane/vim-indent-guides'
 " This pligin does not support the dot repeat
 " Plugin 'Raimondi/delimitMate'
+" text object plugins
+Plugin 'kana/vim-textobj-user'
+Plugin 'glts/vim-textobj-comment'
+Plugin 'rbonvall/vim-textobj-latex'
+
 " close parathesis and dot dot dot
 Plugin 'cohama/lexima.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bkad/CamelCaseMotion'
-Plugin 'kana/vim-textobj-user'
 Plugin 'tommcdo/vim-exchange'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-unimpaired'
@@ -65,17 +71,17 @@ Plugin 'wellle/targets.vim'
 Plugin 'Valloric/MatchTagAlways'
 Plugin 'rking/ag.vim'
 " The plugin listed below are language specific
-Plugin 'rbonvall/vim-textobj-latex'
 " This plugin is for writing
 Plugin 'junegunn/goyo.vim'
 Plugin 'reedes/vim-pencil'
-Plugin 'itchyny/calendar.vim' 
+Plugin 'itchyny/calendar.vim'
 " For all languages
 Plugin 'sheerun/vim-polyglot'
+Plugin 'bendavis78/vim-polymer'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 " The plugin below are specific nvim plugin
-Plugin 'jalvesaq/Nvim-R'
+" Plugin 'jalvesaq/Nvim-R'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 " The plugin below is for iterm
@@ -141,35 +147,25 @@ highlight ExtraWhitespace ctermbg=Black
 " the following is the configuration for the ag
 nmap <Leader>ag :Ag<Space>
 
-" " Change cursor shape between insert and normal mode in iTerm2.app
-" if exists('$ITERM_PROFILE')
-"     if exists('$TMUX')
-"         let &t_SI = "\<Esc>[3 q"
-"         let &t_EI = "\<Esc>[0 q"
-"     else
-"         let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"         let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-"     endif
-" end
-
-let g:ctrlp_show_hidden = 1
-
-" Do not ask every time it appears.
-let g:ycm_confirm_extra_conf = 0
-let g:syntastic_always_populate_loc_list = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:syntastic_html_tidy_exec = 'tidy5'
-set tags+=./.tags
 
 " Limit the working path to current path
-let g:ctrlp_working_path_mode = '0'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_working_path_mode = 'r'
+
+" Do not ask every time it appears.
+autocmd! BufWritePost * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_python_enabled_makers = ['flake8', 'pep8']
+
+
+set tags+=./.tags
+
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
 let g:UltiSnipsEditSplit = "vertical"
 let g:ycm_server_keep_logfiles = 1
-" let g:UltiSnipsExpandTrigger="<C-Tab>"
 
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
 function! Ulti_ExpandOrJump_and_getRes()
@@ -181,6 +177,7 @@ inoremap <CR> <C-R>=(Ulti_ExpandOrJump_and_getRes() > 0)?"":"\n"<CR>
 let g:airline_theme = "bubblegum"
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
 
 
 " " Configuration of markdown
@@ -202,39 +199,22 @@ let R_args = ['--no-save', '--quiet']
 
 autocmd Filetype r imap <S-Tab><S-Tab> <C-x><C-o>
 
-" The snytatic plugin defualt settings
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
 " Save the old file and Switch File with FuzzyFinder
 " New File with FuzzyFinder
-" to tab-current-open
-" To tab-new-open
-" tc tab-close
-" twc tab-write-close
-" tn tab-next
-" tp tab-previous
-" tx tab-execute-as-excutable
-" t<number> go the the <number>th tab
-" <Ctr-w>
-nnoremap to :w<CR>:CtrlP<CR>
-nnoremap To :tabnew<CR>:CtrlP<CR>
-nnoremap tc :tabclose<CR>
-nnoremap tn :tabNext<CR>
-nnoremap tp :tabprevious<CR>
-nnoremap tw :w<CR>
-nnoremap t1 1gt
-nnoremap t2 2gt
-nnoremap t3 3gt
-nnoremap t4 4gt
-nnoremap t5 5gt
-nnoremap t6 6gt
-nnoremap t7 7gt
-nnoremap t8 8gt
-nnoremap t9 9gt
-nnoremap t0 :tablast<CR>
-nmap <Leader>gt :CtrlPBuffer<CR>
+" nnoremap t1 1gt
+" nnoremap t2 2gt
+" nnoremap t3 3gt
+" nnoremap t4 4gt
+" nnoremap t5 5gt
+" nnoremap t6 6gt
+" nnoremap t7 7gt
+" nnoremap t8 8gt
+" nnoremap t9 9gt
+" nnoremap t0 :tablast<CR>
+nmap to :w<CR>:CtrlP<CR>
+nmap <Leader>to :CtrlPBuffer<CR>
+nmap <Leader>bw :w<CR>
+nmap <Leader>bd :bd<CR>
 
 " Opening the shell for vim
 " The following command lines are for specific plugins,
