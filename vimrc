@@ -69,6 +69,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'wellle/targets.vim'
+Plugin 'Chiel92/vim-autoformat'
 " for html tag matching
 Plugin 'Valloric/MatchTagAlways'
 Plugin 'rking/ag.vim'
@@ -100,8 +101,8 @@ autocmd BufRead,BufNewFile *.ts set filetype=typescript
 
 " easy motion with only one leader key
 map <Leader>w <Plug>(easymotion-bd-w)
-map <Leader>f <Plug>(easymotion-s)
-map <Leader>l <Plug>(easymotion-bd-wl)
+" map <Leader>f <Plug>(easymotion-s)
+" map <Leader>l <Plug>(easymotion-bd-wl)
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_shade = 1
 " Set the toggling the line number
@@ -164,7 +165,7 @@ autocmd! BufWritePre * StripWhitespace
 let g:neomake_html_polylint_maker = {
             \ 'args': ['--no-recursion'],
             \ 'errorformat': '%A%f:%l:%c,%Z    %m'
-\}
+            \}
 
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_python_enabled_makers = ['flake8', 'pep8']
@@ -182,12 +183,16 @@ let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=un
 set tags+=./.tags
 " nmap <Leader>tag :TagbarToggle<CR>
 
+" setting auto format
+nmap <Leader>fmt :Autoformat<CR>
+
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
 let g:UltiSnipsEditSplit = "vertical"
 let g:ycm_server_keep_logfiles = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_global_ymc_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
@@ -213,7 +218,8 @@ let g:surround_{char2nr('l')}="\\\1command\1\{\r}"
 
 " There are some specific file types indentation
 " javascript/python/coffeescript 4 indent
-autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype typescript setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
 
 autocmd VimEnter * RainbowParenthesesToggle
@@ -221,18 +227,7 @@ autocmd Syntax * RainbowParenthesesLoadRound
 autocmd Syntax * RainbowParenthesesLoadSquare
 autocmd Syntax * RainbowParenthesesLoadBraces
 
-" Save the old file and Switch File with FuzzyFinder
-" New File with FuzzyFinder
-" nnoremap t1 1gt
-" nnoremap t2 2gt
-" nnoremap t3 3gt
-" nnoremap t4 4gt
-" nnoremap t5 5gt
-" nnoremap t6 6gt
-" nnoremap t7 7gt
-" nnoremap t8 8gt
-" nnoremap t9 9gt
-" nnoremap t0 :tablast<CR>
+" Save the old file and Switch File with ctrlp
 nmap to :w<CR>:CtrlP<CR>
 nmap <Leader>to :CtrlPBuffer<CR>
 nmap <Leader>bw :w<CR>
@@ -244,12 +239,6 @@ nmap <Leader>bd :bd<CR>
 nnoremap <Leader>nt :NERDTree<CR>
 " nnoremap <Leader>sh :tabnew<CR>:VimShell<CR>
 nnoremap <Leader>sh :tabe term://zsh<CR>i
-nmap <Leader>y "+y
-nmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
 
 " I could not fully grasp the navigation techniques
 " So, here I just define the keys and hopefully it will
@@ -276,11 +265,6 @@ inoremap <C-e> <Esc>$a
 
 
 " Exchanging lines and words, so it is pretty awesome.
-" cx exchange. I will listen to the advise and not add too much customisation
-" to the vim key mapping
-
-filetype plugin on
-filetype indent on
 
 " syntax group setting
 let g:cpp_class_scope_highlight = 1
@@ -322,6 +306,12 @@ set incsearch
 nnoremap <silent> <C-L> :nohl<CR>
 nnoremap <silent> <C-l> :let @/ = ""<CR>
 
+" folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
 tmap <ESC> <C-\><C-n>
 
 let g:calendar_google_calendar = 1
@@ -331,23 +321,23 @@ let g:calendar_google_task = 1
 
 let g:startify_bookmarks = [ {'v': '~/.vimrc'}, '~/.zshrc', '~/.tmux.conf' ]
 let g:startify_custom_header = [
-                \ '                                 ___         ',
-                \ '                                 | |         ',
-                \ '                                 | |         ',
-                \ '                         ------------------- ',
-                \ '                         ------------------- ',
-                \ '                          |  ___  |  ___  |  ' ,
-                \ '                          | | | | | | | | |  ' ,
-                \ '                          | |-+-| | |-+-| |  ' ,
-                \ '                          | |_|_| | |_|_| |  ' ,
-                \ '                          |  ___  |  ___  |  ' ,
-                \ '                          | |   | | |   | |  ' ,
-                \ '                          | |   | | |   | |  ' ,
-                \ '                          | |___| | |___| |  ' ,
-                \ '                          |  ___  |  ___  |  ' ,
-                \ '                          | |   | | |   | |  ' ,
-                \ '                          | |   | | |   | |  ' ,
-                \ '                          | |___| | |___| |  ' ,
-                \ '                          |       |       |  ' ,
-                \ '                         =================== '
-\]
+            \ '                                 ___         ',
+            \ '                                 | |         ',
+            \ '                                 | |         ',
+            \ '                         ------------------- ',
+            \ '                         ------------------- ',
+            \ '                          |  ___  |  ___  |  ' ,
+            \ '                          | | | | | | | | |  ' ,
+            \ '                          | |-+-| | |-+-| |  ' ,
+            \ '                          | |_|_| | |_|_| |  ' ,
+            \ '                          |  ___  |  ___  |  ' ,
+            \ '                          | |   | | |   | |  ' ,
+            \ '                          | |   | | |   | |  ' ,
+            \ '                          | |___| | |___| |  ' ,
+            \ '                          |  ___  |  ___  |  ' ,
+            \ '                          | |   | | |   | |  ' ,
+            \ '                          | |   | | |   | |  ' ,
+            \ '                          | |___| | |___| |  ' ,
+            \ '                          |       |       |  ' ,
+            \ '                         =================== '
+            \]

@@ -7,6 +7,27 @@ $0
 #endif
 endsnippet
 
+snippet classdef "define a class"
+class ${1:classname}{
+public:
+    $1();
+private:
+    $0
+}
+endsnippet
+
+snippet getter "set a getter"
+const ${2:int}& ${1:var}() const{
+    return m_$1;
+}
+endsnippet
+
+snippet setter "set a setter"
+void ${1:var}(const ${2:int}& new_$1){
+    m_$1 = new_$1;
+}
+endsnippet
+
 snippet fori "for i loop"
 for (size_t i=0; i<$1; i++){
     $0
@@ -16,6 +37,24 @@ endsnippet
 snippet print "cout checking"
 std::cout<<"$1: "<<$1<<std::endl;
 endsnippet
+
+snippet printv "print vector"
+for (size_t i=0; i<$1.size(); i++){
+    std::cout<<$1[i]<<" ";
+}
+std::cout<<std::endl;
+endsnippet
+
+snippet printv2 "print 2d vector"
+for (size_t i=0; i<$1.size(); i++){
+    for (size_t j=0; j<$1[i].size(); j++){
+        std::cout<<$1[i]<<" ";
+    }
+    std::cout<<std::endl;
+}
+endsnippet
+
+
 
 snippet for2d "for ij loop"
 for (size_t i=0; i<$1.size(); i++){
