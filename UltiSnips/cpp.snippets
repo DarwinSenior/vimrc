@@ -1,3 +1,35 @@
+snippet ifdef "ifdefine file starter"
+#ifndef $1_
+#define $1_
+
+$0
+
+#endif
+endsnippet
+
+snippet fori "for i loop"
+for (size_t i=0; i<$1; i++){
+    $0
+}
+endsnippet
+
+snippet print "cout checking"
+std::cout<<"$1: "<<$1<<std::endl;
+endsnippet
+
+snippet for2d "for ij loop"
+for (size_t i=0; i<$1.size(); i++){
+    for (size_t j=0; j<$1[0].size(); j++){
+        $0
+    }
+}
+
+snippet testcase "a test case"
+TEST_CASE($1){
+    $0
+}
+endsnippet
+
 snippet opencv_experiment
 #include <iostream>
 #include <string>
@@ -12,7 +44,7 @@ cv::Mat3b read_image(const std::string& filename){
 int main(){
     std::string name;
     std::cin>>name;
-    auto image = read_image(name);    
+    auto image = read_image(name);
     cv::namedWindow("display window", cv::WINDOW_AUTOSIZE);
     cv::imshow("display window", image);
     cv::waitKey(0);

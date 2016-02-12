@@ -25,21 +25,15 @@ snippet indexhtml "index.html template"
 </html>
 endsnippet
 
-snippet d3cdn "d3 cdn"
-https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js
+snippet polyhtml
+<dom-module id="$1">
+    <template>
+    $0
+    </template>
+</dom-module>
+<script type="text/javascript" src="$1.js"></script>
 endsnippet
 
-snippet threecdn "three cdn"
-https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js
-endsnippet
-
-snippet underscorecdn "underscore cdn"
-https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js
-endsnippet
-
-snippet jquerycdn "jquery cdn"
-"//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"$0
-endsnippet
 
 snippet polymodule
 <dom-module id="$1">

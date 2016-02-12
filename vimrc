@@ -4,6 +4,7 @@ set guitablabel=%N\ %t
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l
 set nocompatible
+set clipboard=unnamed
 syntax on
 
 let g:python_host_prog = '/usr/local/bin/python'
@@ -25,10 +26,10 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
+" Plugin 'majutsushi/tagbar'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'gcmt/wildfire.vim'
-" Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'darwinsenior/rainbow'
+Plugin 'kien/rainbow_parentheses.vim'
 " the follwoing are
 " ========color scheme==============
 Plugin 'marcopaganini/termschool-vim-theme'
@@ -68,6 +69,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'wellle/targets.vim'
+" for html tag matching
 Plugin 'Valloric/MatchTagAlways'
 Plugin 'rking/ag.vim'
 " The plugin listed below are language specific
@@ -77,6 +79,7 @@ Plugin 'reedes/vim-pencil'
 Plugin 'itchyny/calendar.vim'
 " For all languages
 Plugin 'sheerun/vim-polyglot'
+Plugin 'JuliaLang/julia-vim'
 Plugin 'bendavis78/vim-polymer'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
@@ -144,8 +147,10 @@ nnoremap <Leader>gy<ESC> :Goyo!<CR>
 " ntpeters/vim-better-whitespace config
 highlight ExtraWhitespace ctermbg=Black
 
+
 " the following is the configuration for the ag
 nmap <Leader>ag :Ag<Space>
+
 
 
 " Limit the working path to current path
@@ -154,11 +159,28 @@ let g:ctrlp_working_path_mode = 'r'
 
 " Do not ask every time it appears.
 autocmd! BufWritePost * Neomake
+autocmd! BufWritePre * StripWhitespace
+
+let g:neomake_html_polylint_maker = {
+            \ 'args': ['--no-recursion'],
+            \ 'errorformat': '%A%f:%l:%c,%Z    %m'
+\}
+
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_python_enabled_makers = ['flake8', 'pep8']
+let g:neomake_json_enabled_makers = ['jsonlint']
+let g:neomake_vim_enabled_makes = ['vint']
+let g:neomake_typescript_enabled_makers = ['tsc']
+let g:neomake_html_enabled_makers = ['polylint']
+let g:neomake_cpp_enable_markers=['clang']
+let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
+
+" let g:neomake_matlab_enabled_makers = ['mlint']
 
 
+" add tags and sort of things
 set tags+=./.tags
+" nmap <Leader>tag :TagbarToggle<CR>
 
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -166,6 +188,7 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
 let g:UltiSnipsEditSplit = "vertical"
 let g:ycm_server_keep_logfiles = 1
+let g:ycm_global_ymc_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
 function! Ulti_ExpandOrJump_and_getRes()
@@ -193,11 +216,10 @@ let g:surround_{char2nr('l')}="\\\1command\1\{\r}"
 autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
 
-" The following is the configuration for R
-let R_vsplit = 1
-let R_args = ['--no-save', '--quiet']
-
-autocmd Filetype r imap <S-Tab><S-Tab> <C-x><C-o>
+autocmd VimEnter * RainbowParenthesesToggle
+autocmd Syntax * RainbowParenthesesLoadRound
+autocmd Syntax * RainbowParenthesesLoadSquare
+autocmd Syntax * RainbowParenthesesLoadBraces
 
 " Save the old file and Switch File with FuzzyFinder
 " New File with FuzzyFinder
@@ -260,6 +282,9 @@ inoremap <C-e> <Esc>$a
 filetype plugin on
 filetype indent on
 
+" syntax group setting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 1
 "Set the theme and the fontsize
 colorscheme Tomorrow-Night
 set guifont=InputSans:h20"
