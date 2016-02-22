@@ -1,3 +1,5 @@
+extends tex
+
 snippet "tasks([0-9]+)" "github tasks" br
 ${0:`!p snip.rv = "- [ ]\n"*int(match.group(1))`}
 endsnippet

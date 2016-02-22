@@ -1,5 +1,9 @@
+global !p
+from snippet_helpers import *
+endglobal
+
 snippet ifdef "ifdefine file starter"
-#ifndef $1_
+#ifndef ${1:`!p snip.rv=def_case(vim.eval('expand("%:t")'))`}_
 #define $1_
 
 $0

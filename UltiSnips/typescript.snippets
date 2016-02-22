@@ -1,0 +1,41 @@
+global !p
+from snippet_helpers import title_case
+endglobal
+
+snippet reference "create a reference"
+/// <reference path="$0"/>
+endsnippet
+
+snippet polymodule "trigger component"
+@component("$1")
+class `!p snip.rv=title_case(t[1])` extends polymer.Base{
+    created() {}
+    attached() {}
+    detached() {}
+}
+`!p snip.rv=title_case(t[1])`.register();
+endsnippet
+
+snippet polyprop "trigger property"
+@property({type: $2})
+$1: `!p snip.rv=t[2].lower()` = {$3: undefined};
+endsnippet
+
+snippet polycom "trigger computed"
+@computed()
+$1(): Any {
+    return null;
+}
+endsnippet
+
+snippet polyenv "trigger event"
+@listen("$1")
+on`!p snip.rv=title_case(e: Event)` {
+    console.log('event $1 recieved');
+}
+endsnippet
+
+snippet print
+console.log($0);
+endsnippet
+
