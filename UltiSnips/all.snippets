@@ -1,7 +1,12 @@
 global !p
 from snippet_helpers import pwd
+import datetime
 endglobal
 
 snippet pwd "current directory"
 `!p snip.rv=pwd()`
+endsnippet
+
+snippet date "current date"
+`!p snip.rv=datetime.datetime.now().strftime("%Y %B %d")`
 endsnippet

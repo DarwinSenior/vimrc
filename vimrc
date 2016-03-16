@@ -62,16 +62,19 @@ Plugin 'Shougo/unite.vim'
 Plugin 'ujihisa/unite-colorscheme'
 Plugin 'tsukkee/unite-tag'
 Plugin 'Shougo/unite-outline'
+Plugin 'msprev/unite-bibtex'
 Plugin 'thinca/vim-ref'
 Plugin 'kopischke/unite-spell-suggest'
 
 "=============== for appereance ==============
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'terryma/vim-smooth-scroll'
+Bundle 'zhaocai/GoldenView.Vim'
 
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'google/vim-searchindex'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-unimpaired'
@@ -92,6 +95,7 @@ Plugin 'junegunn/limelight.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
+Plugin 'lambdalisue/shareboard.vim'
 " Plugin 'euclio/vim-markdown-composer'
 
 " For all languages
@@ -322,7 +326,10 @@ if has('mouse')
     set mouse=a
 endif
 
-set previewheight=3
+" when diff use vertical split
+set diffopt+=vertical
+
+set previewheight=5
 
 set autoread
 " The following are the rules for the indentations
@@ -369,7 +376,7 @@ if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_server_keep_logfiles = 1
-let g:ycm_show_diagnostics_ui = 0
+" let g:ycm_show_diagnostics_ui = 0
 let g:ycm_filetype_blacklist = {'tex': 1, 'markdown': 1, 'notes': 1, 'text': 1}
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_global_ymc_extra_conf = "/Users/DarwinSenior/.vim/.ycm_extra_conf.py"

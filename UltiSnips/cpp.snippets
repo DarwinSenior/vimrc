@@ -1,9 +1,9 @@
 global !p
-from snippet_helpers import *
+# from snippet_helpers import *
 endglobal
 
 snippet ifdef "ifdefine file starter"
-#ifndef ${1:`!p snip.rv=def_case(vim.eval('expand("%:t")'))`}_
+#ifndef ${1:`!p snip.rv=(snip.fn).replace('.', '_').upper()`}_
 #define $1_
 
 $0
@@ -12,12 +12,12 @@ $0
 endsnippet
 
 snippet classdef "define a class"
-class ${1:classname}{
+class ${1:`!p snip.rv=(snip.fn).split('.')[0]`}{
 public:
-    $1();
+    `!p snip.rv = t[1].split(':')[0]`();
 private:
     $0
-}
+};
 endsnippet
 
 snippet getter "set a getter"
@@ -39,7 +39,7 @@ for (size_t i=0; i<$1; i++){
 endsnippet
 
 snippet print "cout checking"
-std::cout<<"$1: "<<$1<<std::endl;
+std::cout<<"${2: INFO}:$1 "<<$1<<std::endl;
 endsnippet
 
 snippet printv "print vector"
