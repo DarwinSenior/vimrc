@@ -69,7 +69,9 @@ Plugin 'kopischke/unite-spell-suggest'
 "=============== for appereance ==============
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'terryma/vim-smooth-scroll'
-Bundle 'zhaocai/GoldenView.Vim'
+Plugin 'zhaocai/GoldenView.Vim'
+Plugin 'Yggdroot/indentLine'
+
 
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'tommcdo/vim-exchange'
@@ -85,6 +87,8 @@ Plugin 'Chiel92/vim-autoformat'
 Plugin 'junegunn/vim-easy-align'
 " for html tag matching
 Plugin 'Valloric/MatchTagAlways'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'eagletmt/neco-ghc'
 " The plugin listed below are language specific
 " This plugin is for writing
 
@@ -213,6 +217,7 @@ let g:neomake_html_enabled_makers = ['polylint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 let g:neomake_rust_enabled_makers = ['cargocheck']
+let g:neomake_haskell_enabled_makers = ['ghcmod', 'hlint']
 
 " let g:neomake_matlab_enabled_makers = ['mlint']
 
@@ -223,7 +228,13 @@ set tags+=./.tags
 
 " setting auto format
 nmap <Leader><Leader><Leader> :Autoformat<CR>
+let g:autoformat_verbosemode = 1
+let g:formatdef_haskell_hindent = '"cat | hindent --style johan-tibell"'
+let g:formatters_haskell = ['haskell_hindent']
 
+
+" golden has a conflict mapping with str shall be banned
+let g:goldenview__enable_default_mapping = 0
 
 let g:airline_theme = "bubblegum"
 let g:airline_powerline_fonts = 1
@@ -379,6 +390,7 @@ let g:ycm_server_keep_logfiles = 1
 " let g:ycm_show_diagnostics_ui = 0
 let g:ycm_filetype_blacklist = {'tex': 1, 'markdown': 1, 'notes': 1, 'text': 1}
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
 let g:ycm_global_ymc_extra_conf = "/Users/DarwinSenior/.vim/.ycm_extra_conf.py"
 let g:ycm_rust_src_path = "/Users/DarwinSenior/.rust/rustc-1.6.0/src"
 
