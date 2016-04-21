@@ -16,8 +16,6 @@ let mapleader = ' '
 " set the runtime path include Vundle and initialise
 set rtp+=~/.vim/bundle/Vundle.vim
 " adding merlin for autocomplete ocaml
-set rtp+=~/.opam/system/share/merlin/vim
-" /Users/DarwinSenior/.opam/system/share
 
 " required
 " set the runtime path include Vundle and initialise
@@ -27,7 +25,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
-Plugin 'terryma/vim-multiple-cursors'
 Plugin 'gcmt/wildfire.vim'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'jszakmeister/vim-togglecursor'
@@ -41,12 +38,14 @@ Plugin 'ntpeters/vim-better-whitespace'
 " This pligin does not support the dot repeat
 " Plugin 'Raimondi/delimitMate'
 " text object plugins
+Plugin 'kana/vim-operator-user'
 Plugin 'kana/vim-textobj-user'
 Plugin 'glts/vim-textobj-comment'
 Plugin 'rbonvall/vim-textobj-latex'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'rizzatti/dash.vim'
 
+" -------------- work flow -----------------------
+
+Plugin 'benmills/vimux'
 " close parathesis and dot dot dot
 Plugin 'cohama/lexima.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -54,7 +53,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'SirVer/ultisnips'
 " Plugin 'Rip-Rip/clang_complete'
 " Plugin 'zchee/deoplete-jedi'
-" Plugin 'Shougo/deoplete.nvim'
+Plugin 'Shougo/deoplete.nvim'
 " Plugin 'racer-rust/vim-racer'
 
 Plugin 'Shougo/vimproc.vim'
@@ -63,6 +62,7 @@ Plugin 'ujihisa/unite-colorscheme'
 Plugin 'tsukkee/unite-tag'
 Plugin 'Shougo/unite-outline'
 Plugin 'msprev/unite-bibtex'
+Plugin 'eagletmt/unite-haddock'
 Plugin 'thinca/vim-ref'
 Plugin 'kopischke/unite-spell-suggest'
 
@@ -89,6 +89,7 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'Valloric/MatchTagAlways'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'eagletmt/neco-ghc'
+Plugin 'bitc/vim-hdevtools'
 " The plugin listed below are language specific
 " This plugin is for writing
 
@@ -154,7 +155,8 @@ let g:notes_directories = ["~/Desktop/Notes"]
 let g:notes_suffix = ".md"
 let g:notes_title_sync = "rename_file"
 
-
+" keymappings for haskell intepreter
+let g:vimux_haskell_default_mapping = 1
 
 " for the pencil plugin init
 " this is for the writing mode of vim
@@ -217,8 +219,7 @@ let g:neomake_html_enabled_makers = ['polylint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 let g:neomake_rust_enabled_makers = ['cargocheck']
-let g:neomake_haskell_enabled_makers = ['ghcmod', 'hlint']
-
+let g:neomake_haskell_enabled_makers = ['hdevtools']
 " let g:neomake_matlab_enabled_makers = ['mlint']
 
 
@@ -229,8 +230,10 @@ set tags+=./.tags
 " setting auto format
 nmap <Leader><Leader><Leader> :Autoformat<CR>
 let g:autoformat_verbosemode = 1
-let g:formatdef_haskell_hindent = '"cat | hindent --style johan-tibell"'
-let g:formatters_haskell = ['haskell_hindent']
+if executable('hindent')
+    let g:formatdef_haskell_hindent = '"cat | hindent --style gibiansky"'
+    let g:formatters_haskell = ['haskell_hindent']
+endif
 
 
 " golden has a conflict mapping with str shall be banned
@@ -254,6 +257,7 @@ let g:surround_{char2nr('l')}="\\\1command\1\{\r}"
 " javascript/python/coffeescript 4 indent
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype typescript setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype haskell setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
 
 autocmd VimEnter * RainbowParenthesesToggle
@@ -410,6 +414,7 @@ let g:clang_omnicppcomplete_compliance = 0
 let g:clang_make_default_keymappings = 0
 let g:clang_library_path = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib"
 
+let g:necoghc_enable_detailed_browse = 1
 " let g:deoplete#enable_at_startup = 1
 " inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 
