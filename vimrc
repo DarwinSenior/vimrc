@@ -10,7 +10,6 @@ syntax on
 let g:python_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
-
 let mapleader = ' '
 
 " set the runtime path include Vundle and initialise
@@ -23,7 +22,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-surround'
 Plugin 'gcmt/wildfire.vim'
 Plugin 'kien/rainbow_parentheses.vim'
@@ -35,8 +33,6 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'benekastah/neomake'
 Plugin 'vim-airline/vim-airline'
 Plugin 'ntpeters/vim-better-whitespace'
-" This pligin does not support the dot repeat
-" Plugin 'Raimondi/delimitMate'
 " text object plugins
 Plugin 'kana/vim-operator-user'
 Plugin 'kana/vim-textobj-user'
@@ -48,14 +44,16 @@ Plugin 'rbonvall/vim-textobj-latex'
 Plugin 'benmills/vimux'
 " close parathesis and dot dot dot
 Plugin 'cohama/lexima.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-" ---------------------- unite plugin -----------------
 Plugin 'SirVer/ultisnips'
-" Plugin 'Rip-Rip/clang_complete'
-" Plugin 'zchee/deoplete-jedi'
-Plugin 'Shougo/deoplete.nvim'
-" Plugin 'racer-rust/vim-racer'
 
+" -------------- auto complete ------------------
+Plugin 'zchee/deoplete-jedi'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'bitc/vim-hdevtools'
+
+" ---------------------- unite plugin -----------------
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'ujihisa/unite-colorscheme'
@@ -87,9 +85,6 @@ Plugin 'Chiel92/vim-autoformat'
 Plugin 'junegunn/vim-easy-align'
 " for html tag matching
 Plugin 'Valloric/MatchTagAlways'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'bitc/vim-hdevtools'
 " The plugin listed below are language specific
 " This plugin is for writing
 
@@ -97,17 +92,14 @@ Plugin 'bitc/vim-hdevtools'
 Plugin 'junegunn/goyo.vim'
 Plugin 'reedes/vim-pencil'
 Plugin 'junegunn/limelight.vim'
-Plugin 'plasticboy/vim-markdown'
+" Plugin 'plasticboy/vim-markdown'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
-Plugin 'lambdalisue/shareboard.vim'
-" Plugin 'euclio/vim-markdown-composer'
 
 " For all languages
 Plugin 'sheerun/vim-polyglot'
 Plugin 'bendavis78/vim-polymer'
 Plugin 'JuliaLang/julia-vim'
-Plugin 'Valloric/YouCompleteMe'
 " The plugin below are specific nvim plugin
 
 " ========color scheme==============
@@ -286,13 +278,6 @@ nmap <Leader>oi :w<CR>:Unite outline<CR>i
 nmap to :Ctrlp<CR>
 nmap To :CtrlpBuffer<CR>
 
-" Opening the shell for vim
-" The following command lines are for specific plugins,
-" I believe that I will use all of them by starting leader
-nnoremap <Leader>nt :NERDTree<CR>
-" nnoremap <Leader>sh :tabnew<CR>:VimShell<CR>
-nnoremap <Leader>sh :tabe term://zsh<CR>i
-
 " I could not fully grasp the navigation techniques
 " So, here I just define the keys and hopefully it will
 " speed up. Here in normal/visual mode, Capital HJKL would jump
@@ -383,20 +368,6 @@ if has('nvim')
 endif
 
 " ==================== completion =========================
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-
-" let g:loaded_youcompleteme = 1
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_server_keep_logfiles = 1
-" let g:ycm_show_diagnostics_ui = 0
-let g:ycm_filetype_blacklist = {'tex': 1, 'markdown': 1, 'notes': 1, 'text': 1}
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
-let g:ycm_global_ymc_extra_conf = "/Users/DarwinSenior/.vim/.ycm_extra_conf.py"
-let g:ycm_rust_src_path = "/Users/DarwinSenior/.rust/rustc-1.6.0/src"
 
 let g:UltiSnipsEditSplit = "vertical"
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
@@ -414,13 +385,8 @@ let g:clang_omnicppcomplete_compliance = 0
 let g:clang_make_default_keymappings = 0
 let g:clang_library_path = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib"
 
-let g:necoghc_enable_detailed_browse = 1
-" let g:deoplete#enable_at_startup = 1
-" inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-
-" for racer completion
-let g:racer_cmd = "~/.cargo/bin/racer"
-let $RUST_SRC_PATH = "/Users/DarwinSenior/.rust/rustc-1.6.0/src"
+let g:deoplete#enable_at_startup = 1
+inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 
 " startify settings
 
