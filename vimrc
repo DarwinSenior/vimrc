@@ -101,6 +101,7 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'bendavis78/vim-polymer'
 Plugin 'JuliaLang/julia-vim'
 " The plugin below are specific nvim plugin
+Plugin 'jalvesaq/Nvim-R'
 
 " ========color scheme==============
 Plugin 'marcopaganini/termschool-vim-theme'
@@ -189,10 +190,6 @@ nmap ga <Plug>(EasyAlign)
 highlight ExtraWhitespace ctermbg=Black
 
 
-" Limit the working path to current path
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_working_path_mode = 'r'
-
 " Do not ask every time it appears.
 autocmd! BufWritePost * Neomake
 autocmd! BufWritePre * StripWhitespace
@@ -257,11 +254,10 @@ autocmd Syntax * RainbowParenthesesLoadRound
 autocmd Syntax * RainbowParenthesesLoadSquare
 autocmd Syntax * RainbowParenthesesLoadBraces
 
-" ref-pydoc
-let g:ref_pydoc_cmd = "python3 -m pydoc"
+" This is the how I use vimux
+nnoremap <C-c> "vyip}:VimuxRunCommand @v<CR>
+nnoremap <C-x> :VimuxCloseRunner<CR>
 
-" Save the old file and Switch File with ctrlp
-" nmap to :w<CR>:CtrlP<CR>
 if executable('ag')
     let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup','--hidden', '-g', '']
     let g:unite_source_grep_command = 'ag'
@@ -275,8 +271,9 @@ nmap <Leader>bi :w<CR>:Unite buffer<CR>i
 nmap <Leader>ti :w<CR>:Unite tag<CR>i
 " nmap <Leader>yi :w<CR>:Unite
 nmap <Leader>oi :w<CR>:Unite outline<CR>i
-nmap to :Ctrlp<CR>
-nmap To :CtrlpBuffer<CR>
+nmap <C-n> :UniteNext<CR>
+nmap <C-N> :UnitePrevious<CR>
+nmap <Leader>gi :Unite grep/git<CR><CR>
 
 " I could not fully grasp the navigation techniques
 " So, here I just define the keys and hopefully it will
@@ -284,18 +281,12 @@ nmap To :CtrlpBuffer<CR>
 " 5 steps ahead instead of 1
 " and in the insert mode, I will use <Ctrl>+HJKL for these
 " special jumps
-nmap H 5h
-nmap L 5l
-nmap J 5j
-nmap K 5k
 vmap J 5j
 vmap K 5k
-vmap H 5h
-vmap L 5l
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+nmap K 5K
+nmap J 5j
+" noremap <silent> K :call smooth_scroll#up(&scroll, 0, 1)<CR>
+" noremap <silent> J :call smooth_scroll#down(&scroll, 0, 1)<CR>
 
 " These command are for the insert mode
 " <Ctrl>+<Enter> insert a new line below
