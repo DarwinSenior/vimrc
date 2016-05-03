@@ -1,4 +1,8 @@
 autoload/*
 bundle/*
 plugged/*
-
+.VimballRecord
+.netrwhist
+doc/
+ftdetect/
+syntax/
